@@ -1,13 +1,14 @@
-package org.example.store;
+package org.example.configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreConfig {
-    private List<Wall> walls;
+    private ArrayList<Wall> walls;
     private Point entrance;
     private Point exit;
 
-    public List<Wall> getWalls() {
+    public ArrayList<Wall> getWalls() {
         return walls;
     }
 
@@ -19,7 +20,7 @@ public class StoreConfig {
         return exit;
     }
 
-    public void setWalls(List<Wall> walls) {
+    public void setWalls(ArrayList<Wall> walls) {
         this.walls = walls;
     }
 

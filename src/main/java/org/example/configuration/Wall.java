@@ -1,4 +1,4 @@
-package org.example.store;
+package org.example.configuration;
 
 public class Wall {
     private Point start;

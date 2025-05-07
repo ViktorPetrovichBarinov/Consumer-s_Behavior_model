@@ -1,10 +1,10 @@
 package org.example;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import org.apache.commons.cli.*;
+import org.example.configuration.StoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.*;
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
@@ -33,6 +33,9 @@ public class Main {
                 logger.info("Using configuration path: {}", filePath);
             }
             SupermarketCreator creator = new SupermarketCreator(filePath);
+
+            StoreConfig config = creator.getStoreConfig();
+            Model model = new Model(config);
         } catch (ParseException e) {
             logger.info("Arguments parsing error: {}", e.getMessage());
         }

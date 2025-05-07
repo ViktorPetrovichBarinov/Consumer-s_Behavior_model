@@ -1,15 +1,11 @@
 package org.example;
 
-import com.fasterxml.jackson.core.json.async.NonBlockingJsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.store.StoreConfig;
+import org.example.configuration.StoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
 import java.io.*;
-import java.util.ArrayList;
 
 public class SupermarketCreator {
     private static final Logger logger = LoggerFactory.getLogger(SupermarketCreator.class);
@@ -26,8 +22,13 @@ public class SupermarketCreator {
         try {
             File jsonFile = new File(configPath);
             this.storeConfig = mapper.readValue(jsonFile, StoreConfig.class);
+            logger.info("config was successfully loaded");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public StoreConfig getStoreConfig() {
+        return storeConfig;
     }
 }
