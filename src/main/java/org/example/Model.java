@@ -7,10 +7,10 @@ import org.example.graph.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Model {
     private Point spawnPoint;
@@ -19,17 +19,46 @@ public class Model {
 
     private static final Logger logger = LoggerFactory.getLogger(Model.class);
     private final DijkstraImpl dijkstra = new DijkstraImpl();
+    private final StoreGraph storeGraph;
+    private final ArrayList<Counter> counters;
+    private Double avgNumberOfBuying;
+    private final Random random = new Random(52);
 
     public Model(StoreConfig config) {
         spawnPoint = config.getEntrance();
         exitPoint = config.getExit();
         shopPlane = new ShopPlane(config.getWalls());
-
         dijkstraFill(shopPlane.getGraph());
-        //Map<Vertex, Double> map = dijkstra.dijkstra(new Vertex(new Point(1, 1)));
+        storeGraph = new StoreGraph(config.getCounters(), spawnPoint, exitPoint);
+        fillStoreGraph();
+        counters = config.getCounters();
+        initAvgNumberOfBuying();
 
-        //System.out.println(map);
         logger.info("\n" + shopPlane.toString());
+    }
+
+    private void initAvgNumberOfBuying() {
+        double avgNumberOfBuying = 0;
+        for (var counter : counters) {
+            double weight = counter.weight;
+            avgNumberOfBuying += weight;
+        }
+        this.avgNumberOfBuying = avgNumberOfBuying;
+    }
+
+    private void fillStoreGraph() {
+        var vertexes = storeGraph.getVertexes();
+        for (int i = 0; i < vertexes.size(); i++) {
+            var from = vertexes.get(i);
+            for (int j = i + 1; j < vertexes.size(); j++) {
+                var to = vertexes.get(j);
+                var path = dijkstra.getPath(from, to);
+
+                double distance = dijkstra.getDistance(path);
+                storeGraph.addEdge(from, to, distance, path);
+                storeGraph.addEdge(to, from, distance, path);
+            }
+        }
     }
 
     private void dijkstraFill(ArrayList<ArrayList<Vertex>> graph) {
@@ -46,5 +75,8 @@ public class Model {
         }
     }
 
+    public void simulateBuyings() {
+
+    }
 
 }

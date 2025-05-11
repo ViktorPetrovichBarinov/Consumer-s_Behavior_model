@@ -42,11 +42,69 @@
     }
   ],
   "entrance": {
-    "x": 1,
-    "y": 1
+    "x": 5,
+    "y": 9
   },
   "exit": {
-    "x": 9,
+    "x": 5,
     "y": 9
-  }
+  },
+  "counters": [
+    {
+      "name": "meat",
+      "coordinate": {
+        "x": 1,
+        "y": 1
+      },
+      "weight": 0.8
+    },
+    {
+      "name": "bread",
+      "coordinate": {
+        "x": 9,
+        "y": 9
+      },
+      "weight": 0.6
+    },
+    {
+      "name": "fish",
+      "coordinate": {
+        "x": 9,
+        "y": 1
+      },
+      "weight": 0.3
+    },
+    {
+      "name": "vegetables",
+      "coordinate":{
+        "x": 1,
+        "y": 9
+      },
+      "weight": 0.4
+    },
+    {
+      "name": "fruits",
+      "coordinate": {
+        "x": 1,
+        "y": 5
+      },
+      "weight": 0.4
+    },
+    {
+      "name": "candies",
+      "coordinate": {
+        "x": 5,
+        "y": 1
+      },
+      "weight": 0.1
+    },
+    {
+      "name": "home",
+      "coordinate": {
+        "x": 9,
+        "y": 5
+      },
+      "weight": 0.1
+    }
+  ]
 }

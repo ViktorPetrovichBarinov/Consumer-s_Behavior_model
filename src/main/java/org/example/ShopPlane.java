@@ -21,7 +21,6 @@ public class ShopPlane {
         initGraph(maxCoordinate);
         fillGraph();
 
-
     }
 
     public ArrayList<ArrayList<Vertex>> getGraph() {
