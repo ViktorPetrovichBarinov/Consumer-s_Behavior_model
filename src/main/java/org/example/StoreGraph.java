@@ -34,4 +34,14 @@ public class StoreGraph {
         }
         edges.add(new StoreGraphEdge(to, weight, path));
     }
+
+    public ArrayList<Vertex> getPath(Vertex from, Vertex to) {
+        ArrayList<StoreGraphEdge> edges = graph.get(from);
+        for (var edge : edges) {
+            if (edge.getTo().equals(to)) {
+                return edge.getPath();
+            }
+        }
+        throw new RuntimeException("No path found for " + from + " to " + to);
+    }
 }

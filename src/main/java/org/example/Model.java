@@ -22,12 +22,14 @@ public class Model {
     private final StoreGraph storeGraph;
     private final ArrayList<Counter> counters;
     private Double avgNumberOfBuying;
+    private ShopHitMap shopHitMap;
     private final Random random = new Random(52);
 
     public Model(StoreConfig config) {
         spawnPoint = config.getEntrance();
         exitPoint = config.getExit();
         shopPlane = new ShopPlane(config.getWalls());
+        shopHitMap = new ShopHitMap(config.getWalls());
         dijkstraFill(shopPlane.getGraph());
         storeGraph = new StoreGraph(config.getCounters(), spawnPoint, exitPoint);
         fillStoreGraph();
@@ -35,6 +37,56 @@ public class Model {
         initAvgNumberOfBuying();
 
         logger.info("\n" + shopPlane.toString());
+    }
+
+    public ShopHitMap simulate(Integer numberOfBuyers) {
+        ArrayList<Path> paths = generatePaths(numberOfBuyers);
+        for (Path path : paths) {
+            Point[] points = path.getPoints();
+            Point prev = this.spawnPoint;
+            for (Point current : points) {
+                ArrayList<Vertex> subPath = storeGraph.getPath(new Vertex(prev), new Vertex(current));
+                shopHitMap.incrementCells(subPath);
+                prev = current;
+            }
+            ArrayList<Vertex> subPath = storeGraph.getPath(new Vertex(prev), new Vertex(this.exitPoint));
+            shopHitMap.incrementCells(subPath);
+
+        }
+
+        return this.shopHitMap;
+    }
+
+    private ArrayList<Path> generatePaths(Integer numberOfBuyers) {
+        int[] paths = new int[numberOfBuyers];
+        int numberOfProducts = (int) (numberOfBuyers * this.avgNumberOfBuying);
+        for (int i = 0; i < numberOfProducts; i++) {
+            int index = random.nextInt(numberOfBuyers);
+            paths[index]++;
+        }
+
+        ArrayList<Path> pathsEmptyList = new ArrayList<>();
+        for (int i = 0; i < numberOfBuyers; i++) {
+            if (paths[i] != 0) {
+                pathsEmptyList.add(new Path(paths[i]));
+            }
+        }
+
+        ArrayList<Path> pathFullList = new ArrayList<>();
+
+        for (Counter counter : counters) {
+            int numberOfCurrentTypeProducts = (int)(counter.weight * numberOfBuyers);
+            for (int j = 0; j < numberOfCurrentTypeProducts; j++) {
+                Path path = pathsEmptyList.get(random.nextInt(pathsEmptyList.size()));
+                path.addPointToRandomPlace(counter.coordinate, random);
+                if (path.isFull()) {
+                    pathFullList.add(path);
+                    pathsEmptyList.remove(path);
+                }
+            }
+        }
+
+        return pathFullList;
     }
 
     private void initAvgNumberOfBuying() {
@@ -50,6 +102,7 @@ public class Model {
         var vertexes = storeGraph.getVertexes();
         for (int i = 0; i < vertexes.size(); i++) {
             var from = vertexes.get(i);
+            storeGraph.addEdge(from, from, 0.0, new ArrayList<>());
             for (int j = i + 1; j < vertexes.size(); j++) {
                 var to = vertexes.get(j);
                 var path = dijkstra.getPath(from, to);

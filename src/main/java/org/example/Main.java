@@ -36,6 +36,8 @@ public class Main {
 
             StoreConfig config = creator.getStoreConfig();
             Model model = new Model(config);
+            ShopHitMap hitMap = model.simulate(100);
+            System.out.println("g");
         } catch (ParseException e) {
             logger.info("Arguments parsing error: {}", e.getMessage());
         }
