@@ -36,4 +36,11 @@ public class ShopHitMap {
         }
     }
 
+    public ArrayList<ArrayList<Integer>> getPlan() {
+        return plan;
+    }
+
+    public int getMaxCoordinate() {
+        return maxCoordinate;
+    }
 }

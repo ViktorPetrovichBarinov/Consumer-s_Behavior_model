@@ -15,6 +15,11 @@ import java.util.Random;
 public class Model {
     private Point spawnPoint;
     private Point exitPoint;
+
+    public ShopPlane getShopPlane() {
+        return shopPlane;
+    }
+
     private ShopPlane shopPlane;
 
     private static final Logger logger = LoggerFactory.getLogger(Model.class);

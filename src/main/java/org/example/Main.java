@@ -6,6 +6,8 @@ import org.example.configuration.StoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) {
@@ -36,11 +38,26 @@ public class Main {
 
             StoreConfig config = creator.getStoreConfig();
             Model model = new Model(config);
-            ShopHitMap hitMap = model.simulate(100);
-            System.out.println("g");
+            ShopHitMap hitMap = model.simulate(100000);
+            HeatMapExample example = new HeatMapExample("Heatmap Example", heatMapToInt(hitMap));
+            example.pack();
+            example.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            example.setVisible(true);
         } catch (ParseException e) {
             logger.info("Arguments parsing error: {}", e.getMessage());
         }
 
+    }
+
+    private static int[][] heatMapToInt(ShopHitMap hitMap) {
+        int max = hitMap.getMaxCoordinate();
+        int[][] result = new int[max+1][max+1];
+        var plan = hitMap.getPlan();
+        for (int x = 0; x <= max; x++) {
+            for (int y = 0; y <= max; y++) {
+                result[x][y] = plan.get(x).get(y);
+            }
+        }
+        return result;
     }
 }

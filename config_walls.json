@@ -46,8 +46,8 @@
     "y": 9
   },
   "exit": {
-    "x": 5,
-    "y": 9
+    "x": 3,
+    "y": 1
   },
   "counters": [
     {
@@ -56,7 +56,7 @@
         "x": 1,
         "y": 1
       },
-      "weight": 0.8
+      "weight": 0.2
     },
     {
       "name": "bread",
@@ -64,7 +64,7 @@
         "x": 9,
         "y": 9
       },
-      "weight": 0.6
+      "weight": 0.2
     },
     {
       "name": "fish",
@@ -72,7 +72,7 @@
         "x": 9,
         "y": 1
       },
-      "weight": 0.3
+      "weight": 0.2
     },
     {
       "name": "vegetables",
@@ -80,7 +80,7 @@
         "x": 1,
         "y": 9
       },
-      "weight": 0.4
+      "weight": 0.2
     },
     {
       "name": "fruits",
@@ -88,7 +88,7 @@
         "x": 1,
         "y": 5
       },
-      "weight": 0.4
+      "weight": 0.8
     },
     {
       "name": "candies",
@@ -96,7 +96,7 @@
         "x": 5,
         "y": 1
       },
-      "weight": 0.1
+      "weight": 0.5
     },
     {
       "name": "home",
@@ -104,7 +104,7 @@
         "x": 9,
         "y": 5
       },
-      "weight": 0.1
+      "weight": 0.8
     }
   ]
 }
